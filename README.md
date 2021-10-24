@@ -1,6 +1,16 @@
+                                               CREATED WITH WFH SITUATION
+
+# Covid Perl
+
+ Simple Scripting IRC bot.<br>
+ Writing with PERL and supported some perl modules<br>
+ Suggest install <b>cpanminus</b> to install perl modules<br>
+ To use the script, Edit some config, and Just run @terminal
+ 
+ terminal@b0x~$ perl Covid.pl
+                                               
+
 # Covid TCL
-                                               CREATED WITH WFH SITUATION 
-##############################################################################
 
  TCL NAME     : COVID TCL                                                
                                                                           
