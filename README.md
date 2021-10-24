@@ -1,20 +1,21 @@
 # Covid TCL
+                                               CREATED WITH WFH SITUATION 
 ##############################################################################
-##                                                                          ##
-## TCL NAME     : COVID TCL                                                 ##
-##                                                                          ##
-## SIMPLE TCL JUST FOR BASIC TCL, AND NO PS TOTCHAN, DLL                    ##
-## BORING WITH ALOT OF TCL LIKE NET* BUS* ALLO* PET*                        ##
-## WITH ALOT FEATURE BUT USELESS (I JUST NEED PARKING JOIN PART BOT)        ##
-##                                                                          ##
-## RUN YOUR EGGDROP                                                         ##
-## /MSG BOT HELLO             identify yourself to bot                      ##
-## /MSG BOT pass <password>   create password to bot                        ##
-## /MSG BOT auth <password>   auth yoursef to bot                           ##
-## /MSG BOT out               logout from bot                               ##
-## /MSG BOT help              See Help CMD                                  ##
-##                                                                          ##
-##                                               CREATED WITH WFH SITUATION ##
+
+ TCL NAME     : COVID TCL                                                
+                                                                          
+ SIMPLE TCL JUST FOR BASIC TCL, AND NO PS TOTCHAN, DLL                    
+ BORING WITH ALOT OF TCL LIKE NET* BUS* ALLO* PET*                        
+ WITH ALOT FEATURE BUT USELESS (I JUST NEED PARKING JOIN PART BOT)        
+                                                                          
+ RUN YOUR EGGDROP                                                         
+ /MSG BOT HELLO             identify yourself to bot                      
+ /MSG BOT pass <password>   create password to bot                        
+ /MSG BOT auth <password>   auth yoursef to bot                           
+ /MSG BOT out               logout from bot                               
+ /MSG BOT help              See Help CMD                                  
+                                                                          
+
 ##############################################################################
 
 ChangeLog.
