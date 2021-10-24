@@ -1,8 +1,6 @@
 ##############################################################################
 ##                                                                          ##
-## TCL NAME     : COVID TCL (Latest Update 23 OCT 2021)                     ##
-## VERSION      : 2.0-dev                                                   ##
-## 1ST RELEASE  : 15 SEPT 2021                                              ##
+## TCL NAME     : COVID TCL                                                 ##
 ## AUTHOR       : IJOO A.K.A VICTOR                                         ##
 ##                                                                          ##
 ## SIMPLE TCL JUST FOR BASIC TCL, AND NO PS TOTCHAN, DLL                    ##
