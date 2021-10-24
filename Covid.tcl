@@ -20,7 +20,7 @@
 bind msg n auth msg_auth
 bind msg n out msg_deauth
 bind msg n identify msg_identify
-bind msg n sz msg_sz
+bind msg n cv msg_cv
 bind msg n join msg_join
 bind msg n part msg_part
 bind msg n chanset msg_chanset
@@ -100,7 +100,7 @@ proc autoident2 {nick uhost hand text dest} {global nickpass;putserv "PRIVMSG Ni
 proc compautoident2 {nick uhost hand text dest} {global owner notim;putserv "PRIVMSG $owner :$notim \002Identification\002 has been successful.."}
 
 ##### PROC MSG
-proc msg_sz {nick uhost hand rest} {
+proc msg_cv {nick uhost hand rest} {
 	global botnick notim tolak
 	if {![matchattr $hand Z]} {putquick "NOTICE $nick :$notim [katakata "akses"] $tolak";return 0}
 	set rest [lindex $rest 0]
