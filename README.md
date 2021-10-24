@@ -21,9 +21,7 @@
 ChangeLog.
 - 15 SEPT 2021 - Release 1st
 
-- 10 OKT 2021 - add more help command
-              - add chanset command
-              - fix some issue
+- 10 OKT 2021 - add more help commanda,add chanset command,fix some issue
               
 - 23 OKT 2021 - add rehash, restart, die command
               
