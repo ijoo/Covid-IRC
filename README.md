@@ -34,4 +34,7 @@ ChangeLog.
 - 10 OKT 2021 - add more help commanda,add chanset command,fix some issue
               
 - 23 OKT 2021 - add rehash, restart, die command
+  
+## Error/Bugs Report?
+  - iJoo (#itsupport @ irc.chating.id)
               
