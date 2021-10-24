@@ -1,4 +1,4 @@
-# Welcome to COVID Pages
+# Welcome to COVID IRC bot Pages
 This is a Eggdrop or Perl IRCbot, Just is simple scripting, for simple use.<br>
 
 ## Why named with Covid? 
