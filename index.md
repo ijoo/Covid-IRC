@@ -16,3 +16,6 @@ IO::Socket
 Text::Capitalize
 Time::Seconds
 ```
+
+## Error / Bugs / Suggestion?
+- iJoo (#itsupport @ irc.chating.id)
