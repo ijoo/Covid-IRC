@@ -1,7 +1,8 @@
 # Welcome to COVID Pages
-This is a Eggdrop or Perl IRCbot, 
-Why named with covid? The script name taken when this script created, CORONA virus is attacking our world.
-Just is simple scripting, for simple use.
+This is a Eggdrop or Perl IRCbot, Just is simple scripting, for simple use.<br>
+
+## Why named with Covid? 
+The script name taken when this script created, CORONA virus is attacking our world.
 
 ## For Eggdrop
 for eggdrop just put [covid.tcl](https://raw.githubusercontent.com/ijoo/Covid/main/Covid.tcl) at source of your [eggdrop.conf](https://raw.githubusercontent.com/ijoo/Covid/main/eggdrop.conf)
