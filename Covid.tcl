@@ -1,6 +1,6 @@
 ##############################################################################
 ##                                                                          ##
-## TCL NAME     : COVID TCL (Latest Update 23 OCT 2021)                     ##
+## TCL NAME     : COVID TCL (Latest Update 26 OCT 2021)                     ##
 ## VERSION      : 2.0-dev                                                   ##
 ## 1ST RELEASE  : 15 SEPT 2021                                              ##
 ## AUTHOR       : IJOO A.K.A VICTOR                                         ##
@@ -39,6 +39,8 @@ bind pub n `+f pub_plusteman
 bind pub n `-f pub_minteman
 bind pub n `+av pub_pluspois
 bind pub n `-av pub_minpois
+bind pub n `deluser pub_deluser
+bind pub n `userlist pub_userlist
 
 bind notc - "*This nickname is registered and protected.*" autoident
 bind notc - "*Password accepted - you are now recognized.*" compautoident
@@ -331,6 +333,24 @@ proc pub_join {nick uhost hand chan rest} {
 	}
 }
 
+proc pub_deluser {nick uhost hand chan rest} {
+        global botnick notic tolak
+        if {![matchattr $hand Z]} {putquick "NOTICE $nick :$notic $tolak";return 0}
+	set targetx [lindex $rest 0]
+	set okdel "0"
+        foreach user [userlist] {
+		if { $user == $targetx } {
+			set okdel "1"
+		}
+	}
+	if {$okdel == "1"} {
+		deluser $targetx ; save
+		putquick "NOTICE $nick :$notic $targetx [katakata "is successfully \037delete\037 from database list"]!"
+	} else {
+		putquick "NOTICE $nick :$notic $targetx [katakata "is not available database list"]!"
+	}
+}
+
 proc pub_part {nick uhost hand chan rest} {
 	global botnick notic tolak partm partmsg
 	if {![matchattr $hand Z]} {putquick "NOTICE $nick :$notic $tolak";return 0}
@@ -364,6 +384,19 @@ proc pub_cycle {nick uhost hand chan rest} {
 	set cyclem [lindex $partm [rand [llength $partm]]]
 	putserv "PART $chan [lgrnd] $cyclem"
 	putserv "JOIN $chan"
+}
+
+proc pub_userlist {nick uhost hand chan rest} {
+        global botnick notic tolak
+        if {![matchattr $hand Z]} {putquick "NOTICE $nick :$notic $tolak";return 0}
+	set kirimuser "[katakata "userlist"]: "
+	foreach user [userlist] {
+		set flagx [chattr $user]
+		if {($user != "") && ($flagx != "")} {
+			append kirimuser "\0034,1 $user\0030,1 ($flagx) \003 "
+		}
+	}
+	putquick "NOTICE $nick :$notic $kirimuser"
 }
 
 proc pub_kick {nick uhost hand chan rest} {
