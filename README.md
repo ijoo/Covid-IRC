@@ -12,11 +12,7 @@
 
 # Covid TCL
 
- TCL NAME     : COVID TCL                                                
-                                                                          
- SIMPLE TCL JUST FOR BASIC TCL, AND NO PS TOTCHAN, DLL                    
- BORING WITH ALOT OF TCL LIKE NET* BUS* ALLO* PET*                        
- WITH ALOT FEATURE BUT USELESS (I JUST NEED PARKING JOIN PART BOT)        
+ TCL NAME     : COVID TCL                                                 
                                                                           
  RUN YOUR EGGDROP                                                         
  /MSG BOT HELLO             identify yourself to bot                      
