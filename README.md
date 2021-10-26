@@ -25,16 +25,6 @@
  /MSG BOT out               logout from bot                               
  /MSG BOT help              See Help CMD                                  
                                                                           
-
-##############################################################################
-
-ChangeLog.
-- 15 SEPT 2021 - Release 1st
-
-- 10 OKT 2021 - add more help commanda,add chanset command,fix some issue
-              
-- 23 OKT 2021 - add rehash, restart, die command
-  
-## Error/Bugs Report?
+# Error/Bugs Report?
   - iJoo (#itsupport @ irc.chating.id)
               
