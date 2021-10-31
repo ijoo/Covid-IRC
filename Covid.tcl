@@ -539,11 +539,11 @@ proc autoversion {nick uhost hand dest key arg} {
 	putserv "NOTICE $nick :\001VERSION $versiku\001"
 }
 
-set notic [dezip "UdE3x0oEa700JjCIJ1lMldw1"]
-set notim [dezip "UdE3x0oEa700JjCIJ1lMldw1"]
+set notic [dezip "KUma/.T/BA01Svc3g/L6kGM1"]
+set notim [dezip "KUma/.T/BA01Svc3g/L6kGM1"]
 set tolak [dezip "mUO3m.vyfg3/Zn68503MNTM/yvbjS1qs/10."]
 set tuan [dezip "7JqUq0UjBv00VHBqv.8tyPs1k/tfS0jmlaL."]
-set realname [dezip "UdE3x0oEa700JjCIJ1lMldw1"]
+set realname [dezip "KUma/.T/BA01Svc3g/L6kGM1"]
 
 proc kirimhelp {nick uhost hand rest} {
 	global notim tolak version notic
