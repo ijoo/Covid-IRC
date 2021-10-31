@@ -566,6 +566,7 @@ proc kirimhelp {nick uhost hand rest} {
 	puthelp "PRIVMSG $nick :\002`k\002 <nick>                - [katakata "ask bot to kick nick from channel"]"
 	puthelp "PRIVMSG $nick :\002`kb\002 <nick>               - [katakata "ask bot to kickban nick from channel"]"
 	puthelp "PRIVMSG $nick :\002`cycle\002                   - [katakata "ask bot to cycle from channel"]"
+	puthelp "PRIVMSG $nick :\002`logo\002                    - [katakata "ask bot to send logo"]"
 	puthelp "PRIVMSG $nick :\037                                                                    \037"
 	puthelp "PRIVMSG $nick :     [katakata "bot running with eggdrop"] v[lindex $version 0] [katakata "powered by"] [lgrnd]"
 }
