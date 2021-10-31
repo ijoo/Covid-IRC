@@ -1,6 +1,6 @@
 ##############################################################################
 ##                                                                          ##
-## TCL NAME     : COVID TCL (Latest Update 26 OCT 2021)                     ##
+## TCL NAME     : COVID TCL                                                 ##
 ## VERSION      : 2.0-dev                                                   ##
 ## 1ST RELEASE  : 15 SEPT 2021                                              ##
 ## AUTHOR       : IJOO A.K.A VICTOR                                         ##
