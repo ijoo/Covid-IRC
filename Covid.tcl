@@ -41,11 +41,9 @@ bind pub n `+av pub_pluspois
 bind pub n `-av pub_minpois
 bind pub n `deluser pub_deluser
 bind pub n `userlist pub_userlist
-
-bind notc - "*This nickname is registered and protected.*" autoident
-bind notc - "*Password accepted - you are now recognized.*" compautoident
-bind notc - "*This nick is owned by someone else.*" autoident2
-bind notc - "*Password accepted for*" compautoident2
+bind notc - "*Password accepted*" autoident2
+bind notc - "*This nickname is registered and protected*" autoident
+bind notc - "*This nick is owned by someone else*" autoident
 bind ctcp - "VERSION" autoversion
 bind ctcr - PING pingreply
 bind evnt - init-server evnt:init_server
@@ -99,10 +97,19 @@ set global-chanset {
 
 if {[info exists basechan]} {if {![validchan $basechan]} {channel add $basechan}}
 
-proc autoident {nick uhost hand text dest} {global nickpass;putquick "PRIVMSG NickServ :identify $nickpass"}
-proc compautoident {nick uhost hand text dest} {global owner notim;putquick "PRIVMSG $owner :$notim \002Identification\002 has been successful.."}
-proc autoident2 {nick uhost hand text dest} {global nickpass;putquick "PRIVMSG NickServ@services.dal.net :identify $nickpass"}
-proc compautoident2 {nick uhost hand text dest} {global owner notim;putquick "PRIVMSG $owner :$notim \002Identification\002 has been successful.."}
+proc autoident {nick uhost hand text dest} {
+        global nickpass
+        if {[string tolower $uhost] == "services.dal.net"} {
+                putserv "PRIVMSG NickServ@services.dal.net :identify $nickpass"
+        } else {
+                putserv "PRIVMSG NickServ :identify $nickpass"
+        }
+}
+
+proc autoident2 {nick uhost hand text dest} {
+        global owner notim;
+        putlog "!cVd! Identification has been successful.."
+}
 
 ##### PROC MSG
 proc msg_cv {nick uhost hand rest} {
