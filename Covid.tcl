@@ -26,6 +26,7 @@ bind msg n rehash msg_rehash
 bind msg n restart msg_restart
 bind msg n die msg_shutdown
 bind msg n help kirimhelp
+bind pub n `logo pub_logo
 bind pub n `k pub_kick
 bind pub n `kb pub_kban
 bind pub n `join pub_join
@@ -391,6 +392,15 @@ proc pub_cycle {nick uhost hand chan rest} {
 	set cyclem [lindex $partm [rand [llength $partm]]]
 	putserv "PART $chan [lgrnd] $cyclem"
 	putserv "JOIN $chan"
+}
+
+proc pub_logo {nick uhost hand chan rest} {
+        global botnick notic tolak tuan owner
+        if {![matchattr $hand Z] && ($nick == $owner)} {
+                putquick "NOTICE $nick :$nick, $tolak"
+        } else {
+                putquick "PRIVMSG $chan :[lgrnd]"
+        }
 }
 
 proc pub_userlist {nick uhost hand chan rest} {
