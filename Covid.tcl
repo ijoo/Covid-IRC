@@ -102,6 +102,7 @@ proc autoident {nick uhost hand text dest} {
         global nickpass
         if {[string match "*dal.net*" $uhost]} {
                 putlog "!cVd! DALnet Identify"
+		set net-type "DALnet"
                 putserv "PRIVMSG NickServ@services.dal.net :IDENTIFY $nickpass "
         } else {
 		putlog "!cVd! NickServ Identify"
