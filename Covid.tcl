@@ -100,15 +100,16 @@ if {[info exists basechan]} {if {![validchan $basechan]} {channel add $basechan}
 
 proc autoident {nick uhost hand text dest} {
         global nickpass
-        if {[string tolower $uhost] == "services.dal.net"} {
-                putserv "PRIVMSG NickServ@services.dal.net :identify $nickpass"
+        if {[string match "*dal.net*" $uhost]} {
+                putlog "!cVd! DALnet Identify"
+                putserv "PRIVMSG NickServ@services.dal.net :IDENTIFY $nickpass "
         } else {
+		putlog "!cVd! NickServ Identify"
                 putserv "PRIVMSG NickServ :identify $nickpass"
         }
 }
 
 proc autoident2 {nick uhost hand text dest} {
-        global owner notim;
         putlog "!cVd! Identification has been successful.."
 }
 
