@@ -22,5 +22,5 @@
  /MSG BOT help              See Help CMD                                  
                                                                           
 # Error/Bugs Report?
-  - iJoo (#itsupport @ irc.chating.id)
+  - iJoo (#metro @ irc.evochat.id)
               
