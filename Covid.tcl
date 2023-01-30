@@ -514,7 +514,7 @@ proc pingreply {nick host hand dest key arg} {
 		return 0
 	}
 }
-proc evnt:init_server {type} {global botnick;putquick "MODE $botnick +iB-ws"}
+proc evnt:init_server {type} {global botnick;putquick "MODE $botnick +xiB-ws"}
 proc unsix {txt} {set retval $txt;regsub ~ $retval "" retval;return $retval}
 proc dezip {txt} {return [decrypt 64 [unsix $txt]]}
 proc dcp {txt} {return [decrypt 64 $txt]}
