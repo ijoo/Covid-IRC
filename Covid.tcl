@@ -1,7 +1,7 @@
 ##############################################################################
 ##                                                                          ##
 ## TCL NAME     : COVID TCL                                                 ##
-## VERSION      : 2.0-dev                                                   ##
+## VERSION      : 2.1-dev                                                   ##
 ## 1ST RELEASE  : 15 SEPT 2021                                              ##
 ## AUTHOR       : IJOO A.K.A VICTOR                                         ##
 ##                                                                          ##
@@ -25,6 +25,7 @@ bind msg n chanset msg_chanset
 bind msg n rehash msg_rehash
 bind msg n restart msg_restart
 bind msg n die msg_shutdown
+bind msg n cuek msg_cuek
 bind msg n help kirimhelp
 bind pub n `logo pub_logo
 bind pub n `k pub_kick
@@ -282,6 +283,47 @@ proc msg_chanset {nick host hand arg} {
 		}
 	} else {
 		putquick "NOTICE $nick :$notic $tolak"
+	}
+}
+
+proc msg_cuek {nick uhost hand rest} {
+        global botnick notim tolak notic
+        if {![matchattr $hand Z]} {putquick "NOTICE $nick :$notic $tolak"; return 0}
+        if {[lindex [split $rest] 0] == "add"} {
+                set addmask [lindex [split $rest] 1]
+                if {[isignore $addmask]} {putquick "PRIVMSG $nick :\037ERROR\037: This is already a Valid Ignore."; return}
+                set duration [lindex [split $rest] 2]
+                set reason "iGnored By Covid TcL"
+                newignore $addmask $hand "$reason" $duration
+                putquick "PRIVMSG $nick :\002New Ignore\002: $addmask - \002Duration\002: $duration minutes - \002Reason\002: $reason"
+                return 0
+        }
+        if {[lindex [split $rest] 0] == "del"} {
+        set delmask [lindex [split $rest] 1]
+        if {![isignore $delmask]} {putquick "PRIVMSG $chan :\037ERROR\037: This is NOT a Valid Ignore."; return}
+        killignore $delmask
+        putquick "PRIVMSG $nick :\002Removed Ignore\002: $delmask"
+        return 0
+        }
+        if {[lindex [split $rest] 0] == "list"} {
+		if {[ignorelist] == ""} {
+			putquick "PRIVMSG $nick :\002There are Currently no Ignores\002"
+		} else {
+			putquick "PRIVMSG $nick :\002Current Ignore List\002"
+			foreach ignore [ignorelist] {
+				set ignoremask [lindex $ignore 0]
+				set ignorecomment [lindex $ignore 1]
+				set ignoreexpire [lindex $ignore 2]
+				set ignoreadded [lindex $ignore 3]
+				set ignorecreator [lindex $ignore 4]
+				set ignoreexpire_ctime [ctime $ignoreexpire]
+				set ignoreadded_ctime [ctime $ignoreadded]
+				if {$ignoreexpire == 0} {
+				  set ignoreexpire_ctime "Permanent!"
+				}
+			putserv "PRIVMSG $nick :\002Mask\002: $ignoremask - \002Set by\002: $ignorecreator - \002Created On\002: $ignoreadded_ctime - \002Expired On\002: $ignoreexpire_ctime "
+			}
+		}
 	}
 }
 
@@ -556,6 +598,7 @@ proc kirimhelp {nick uhost hand rest} {
 	puthelp "PRIVMSG $nick :\002part\002 <#chan>               - [katakata "ask bot to part channel <#chan>"]"
 	puthelp "PRIVMSG $nick :\002identify\002 <password>        - [katakata "ask bot to identify botnick"]"
 	puthelp "PRIVMSG $nick :\002chanset\002 <#chan> <+/-flag>  - [katakata "ask bot to setting flag on channel"]"
+	puthelp "PRIVMSG $nick :\002cuek\002 <add/del/list> <*!*@*>- [katakata "ask bot to ignore host user"]"
 	puthelp "PRIVMSG $nick :\002rehash\002                     - [katakata "ask bot to rehashing"]"
 	puthelp "PRIVMSG $nick :\002restart\002                    - [katakata "ask bot to restart "]"
 	puthelp "PRIVMSG $nick :\002die\002                        - [katakata "ask bot to shutdown "]"
