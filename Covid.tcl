@@ -17,6 +17,8 @@
 
 bind msg n auth msg_auth
 bind msg n out msg_deauth
+bind msg n nick msg_nick
+bind msg n real msg_realname
 bind msg n identify msg_identify
 bind msg n cv msg_cv
 bind msg n join msg_join
@@ -182,6 +184,26 @@ proc msg_part {nick uhost hand rest} {
 		putquick "NOTICE $nick :$notic [katakata "im parting"] $namachan"
 		channel remove $namachan
 	}
+}
+
+proc msg_nick {nick uhost hand rest} {
+        global botnick notic tolak notim
+        if {![matchattr $hand Z]} {putquick "NOTICE $nick :$notic $tolak";return 0}
+        set nik [lindex $rest 0]
+        set pas [lindex $rest 1]
+        if {$nik == "" || $pas == ""} {putquick "PRIVMSG $nick :$notic Command: \002nick\002 <nick> <pass>";return 0}
+        set bnick $nik
+        set bpass $pas
+        putserv "NICK $nik $pas"
+        putquick "PRIVMSG $nick :$notic [katakata "botnick change to"] $nik"
+}
+
+proc msg_realname {nick uhost hand rest} {
+        global botnick notic tolak notim
+        if {![matchattr $hand Z]} {putquick "NOTICE $nick :$notic $tolak";return 0}
+        if {$rest == ""} {putquick "PRIVMSG $nick :$notic Command: \002real\002 <realname>";return 0}
+        set realname $rest
+        putserv "QUIT :$notic [katakata "rEALNaME CHaNGED By"] \[ $nick \]"
 }
 
 proc msg_identify {nick uhost hand rest} {
