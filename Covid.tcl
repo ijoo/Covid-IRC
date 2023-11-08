@@ -686,3 +686,7 @@ proc kirimhelp {nick uhost hand rest} {
 	puthelp "PRIVMSG $nick :\037                                                                    \037"
 	puthelp "PRIVMSG $nick :     [katakata "bot running with eggdrop"] v[lindex $version 0] [katakata "powered by"] [lgrnd]"
 }
+
+putlog "#######################################"
+putlog "##       Covid.Tcl is Loaded!!       ##"
+putlog "#######################################"
