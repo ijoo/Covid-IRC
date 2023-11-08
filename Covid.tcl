@@ -152,10 +152,10 @@ proc msg_auth {nick uhost hand rest} {
 		setuser $nick HOSTS $hostmask
 		setuser $nick XTRA COVID $inputpw
 		chattr $nick +fZHQ
-		putquick "NOTICE $nick :$notic [katakata "access"] $tuan"
+		putquick "PRIVMSG $nick :$notic [katakata "access"] $tuan"
 		save
 	} else {
-		putquick "NOTICE $nick :$notic [katakata "wrong password"]!"
+		putquick "PRIVMSG $nick :$notic [katakata "wrong password"]!"
 	}
 }
 
@@ -164,7 +164,7 @@ proc msg_deauth {nick uhost hand rest} {
 	if {![matchattr $hand n]} {putquick "NOTICE $nick :$notic $tolak";return 0}
 	if {![matchattr $hand Z]} {putquick "NOTICE $nick :$notic [katakata "please auth 1st"]!";return 0}
 	chattr $nick -Z;save
-	putquick "NOTICE $nick :$notic [katakata "successfully deauth"]!"
+	putquick "PRIVMSG $nick :$notic [katakata "successfully deauth"]!"
 }
 
 proc msg_join {nick uhost hand rest} {
@@ -172,10 +172,10 @@ proc msg_join {nick uhost hand rest} {
 	if {![matchattr $hand Z]} {putquick "NOTICE $nick :$notic $tolak";return 0}
 	set namachan [lindex $rest 0]
 	if { $namachan == ""} {
-		putquick "NOTICE $nick :$notic Command: /msg $botnick join <#chan>"
+		putquick "PRIVMSG $nick :$notic Command: /msg $botnick join <#chan>"
 	} else {
 		channel add $namachan
-		putquick "NOTICE $nick :$notic [katakata "im joining"] $namachan"
+		putquick "PRIVMSG $nick :$notic [katakata "im joining"] $namachan"
 	}
 }
 
@@ -184,11 +184,11 @@ proc msg_part {nick uhost hand rest} {
 	if {![matchattr $hand Z]} {putquick "NOTICE $nick :$notic $tolak";return 0}
 	set namachan [lindex $rest 0]
 	if { $namachan == ""} {
-		putquick "NOTICE $nick :$notic Command: /msg $botnick part <#chan>"
+		putquick "PRIVMSG $nick :$notic Command: /msg $botnick part <#chan>"
 	} else {
 		set partmsg [lindex $partm [rand [llength $partm]]]
 		putserv "PART $namachan [lgrnd] $partmsg"
-		putquick "NOTICE $nick :$notic [katakata "im parting"] $namachan"
+		putquick "PRIVMSG $nick :$notic [katakata "im parting"] $namachan"
 		channel remove $namachan
 	}
 }
@@ -218,7 +218,7 @@ proc msg_identify {nick uhost hand rest} {
 	if {![matchattr $hand Z]} {putquick "NOTICE $nick :$notic $tolak";return 0}
 	set passwo [lindex $rest 0]
 	if { $passwo == ""} {
-		putquick "NOTICE $nick :$notic Command: /msg $botnick <password>"
+		putquick "PRIVMSG $nick :$notic Command: /msg $botnick <password>"
 	} else {
 		putserv "PRIVMSG NickServ :identify $passwo"
 	}
@@ -322,7 +322,7 @@ proc msg_chanset {nick host hand arg} {
 		puthelp "PRIVMSG $nick :Set \[\002$flag\002\] to \002$str\002 on $chan"
 		}
 	} else {
-		putquick "NOTICE $nick :$notic $tolak"
+		putquick "PRIVMSG $nick :$notic $tolak"
 	}
 }
 
