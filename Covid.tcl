@@ -468,9 +468,8 @@ proc pub_info {nick uhost hand chan rest} {
 	gets $backid pidnya
         set getcpu "ps axu | grep $pidnya | head -1"
         catch { eval exec $getcpu } outcpu
-        set varr [split $outcpu " "]
-        set cpux [lindex $varr 8]
-        set memx [lindex $varr 10]
+        set cpux [lindex $outcpu 2]
+        set memx [lindex $outcpu 3]
         puthelp "PRIVMSG $chan :$notim [katakata "powered By"] [lgrnd].[katakata "tcl with eggdrop"] v[lindex $version 0]"
         puthelp "PRIVMSG $chan :$notim [katakata "Running On"]\002 $myos \002[katakata "with tcl v"]\002$tcl_version \002"
         puthelp "PRIVMSG $chan :$notim [katakata "Procces Number"]:\002 $pidnya \002[katakata "Memory Usage"]:\002 $memx \002 [katakata "CPu Usage"]:\002 $cpux \002"
