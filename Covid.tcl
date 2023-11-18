@@ -520,7 +520,7 @@ proc pub_info {nick uhost hand chan rest} {
 proc pub_cycle {nick uhost hand chan rest} {
 	global botnick notic tolak partm cyclem
 	set cyclem [lindex $partm [rand [llength $partm]]]
-	putserv "PART $chan [lgrnd] $cyclem"
+	putserv "PART $chan :[lgrnd] $cyclem"
 	putserv "JOIN $chan"
 }
 
