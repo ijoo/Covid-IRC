@@ -17,19 +17,36 @@
 ##                                               CREATED WITH WFH SITUATION ##
 ##############################################################################
 
+######################################### You Can Edit Here ##################
+set verc "3.0b"
+set notic "!\002c\037V\037d\002!"
+set notim "!\002c\037V\037d\002!"
+set tolak "\002\0034deNieD!\003\002"
+set tuan "\002\00312oWNeR!\003\002"
+set aktif "\002ACTIVATED\002"
+set deaktif "\002DEACTIVATED\002"
+set enable "\002ENABLE\002"
+set disable "\002DISABLE\002"
+##############################################################################
+
 set partm {
-"bAlIk Base!" "WroNG ChaNneL!" "Bad UsER!" "BaCk To BaSe" "Be Right Back!" "No one Join Forever!" "Damn! Wrong Channel!" "Access Denied!" "Return To Base!"
-"Access Rejected!" "Going Back!" "Ilegal Channel!" "Going Home!" "Good Bye!" "Sayonara!" "Ups! Wrong Room :P" "Got To Go!" "Goodbye! Ugly :P" "Go To Hell!"
+	"bAlIk Base!" "WroNG ChaNneL!" "Bad UsER!" "BaCk To BaSe" "Be Right Back!" "No one Join Forever!" "Damn! Wrong Channel!" "Access Denied!" "Return To Base!"
+	"Access Rejected!" "Going Back!" "Ilegal Channel!" "Going Home!" "Good Bye!" "Sayonara!" "Ups! Wrong Room :P" "Got To Go!" "Goodbye! Ugly :P" "Go To Hell!"
 }
 
 set awaym {
-"aWaY FrOM KeyBoaRd" "SlEppiNG oN Net" "WaCthiNG Tube6.nET" "Got tO gO!" "No oNE CarE!" "CoVID tcl bY iJoo" "EgGDrop noT diES" "i ThiNk aBouT yOu" "reMeMbeRiNg You"
-"Play mOBiLE lEGenD" "CoRoNaViRus iS DeADly" "NoT ReaDY F0r QueRY" "Bad Boy nOT AlLoWed" "CrOSsinG tHE StrEet"
+	"aWaY FrOM KeyBoaRd" "SlEppiNG oN Net" "WaCthiNG Tube6.nET" "Got tO gO!" "No oNE CarE!" "CoVID tcl bY iJoo" "EgGDrop noT diES" "i ThiNk aBouT yOu" "reMeMbeRiNg You"
+	"Play mOBiLE lEGenD" "CoRoNaViRus iS DeADly" "NoT ReaDY F0r QueRY" "Bad Boy nOT AlLoWed" "CrOSsinG tHE StrEet"
 }
 
 set versim {
-"eGgdRoP v1.5.6+ctcpfix (c) 1996" "xchat 2.8.8 Ubuntu" "rZNC Version 1.0 [02/01/11] - Built from ZNC." "psyBNC-2.3.1-7"
-"PIRCH98:WIN 95/98/WIN NT:1.0 (build 1.0.1.1190)" "Snak for Macintosh 4.13 English" "mIRC 3.75 via ZNC 1.8.2deb10+2"
+	"eGgdRoP v1.5.6+ctcpfix (c) 1996" "xchat 2.8.8 Ubuntu" "rZNC Version 1.0 [02/01/11] - Built from ZNC." "psyBNC-2.3.1-7"
+	"PIRCH98:WIN 95/98/WIN NT:1.0 (build 1.0.1.1190)" "Snak for Macintosh 4.13 English" "mIRC 3.75 via ZNC 1.8.2deb10+2"
+}
+
+set sambutm {
+	"seLaMat DatAng Ya.." "EnJoy YoUr Stay.." "GrEat to See YOu.." "WelComE bACk yOo.."
+	"Glad wIth YoU Here.." "StAy anD HaPpy ChAt.." "NeEd Help? Msg The @p.."
 }
 
 set ctcp-mode "1"
@@ -77,6 +94,7 @@ bind msg Z restart msg_restart
 bind msg Z die msg_shutdown
 bind msg Z ignore msg_cuek
 bind msg Z sh msg_sh
+bind msg Z autogreet msg_greetonoff
 bind msg Z help kirimhelp
 bind pub Z sh pub_sh
 bind pub Z `deauth pub_deauth
@@ -98,6 +116,8 @@ bind pub Z `+f pub_plusteman
 bind pub Z `-f pub_minteman
 bind pub Z `+av pub_pluspois
 bind pub Z `-av pub_minpois
+bind pub Z `+greet pub_plusgreet
+bind pub Z `-greet pub_mingreet
 bind pub Z `v pub_pois
 bind pub Z `mv pub_mpois
 bind pub Z `dv pub_depois
@@ -113,26 +133,19 @@ bind notc - "*This nick is owned by someone else*" autoident
 bind ctcp - "VERSION" autoversion
 bind ctcr - PING pingreply
 bind evnt - init-server evnt:init_server
-
 bind time -|- {00 * * * *} setaway
 bind raw - 432 raw_release
+setudef flag sambut
 
-######################################### You Can Edit Here ####
-set notic "!\002c\037V\037d\002!"
-set notim "!\002c\037V\037d\002!"
-set tolak "\002\0034deNieD!\003\002"
-set tuan "\002\00312oWNeR!\003\002"
-set verc "3.0b"
-################################################################
-
-if {![info exist realname]} {set realname [dezip "KUma/.T/BA01Svc3g/L6kGM1"]}
+if {![info exist realname]} {set realname $notim"]}
+if {![info exist greetmode]} {set greetmode "0"}
 if {[info exists basechan]} {if {![validchan $basechan]} {channel add $basechan}}
 
 proc autoident {nick uhost hand text dest} {
 	global nickpass
 	if {[string match "*dal.net*" $uhost]} {
 			putlog "!cVd! DALnet Identify"
-	set net-type "DALnet"
+			set net-type "DALnet"
 			putserv "PRIVMSG NickServ@services.dal.net :IDENTIFY $nickpass "
 	} else {
 	putlog "!cVd! NickServ Identify"
@@ -237,7 +250,7 @@ proc msg_nick {nick uhost hand rest} {
 
 proc msg_realname {nick uhost hand rest} {
 	global botnick realname notic notim
-	if {$rest == ""} {putquick "PRIVMSG $nick :$notic Command: \002real\002 <realname>";return 0}
+	if {$rest == ""} {putquick "PRIVMSG $nick :$notic Command: \002realname\002 <realname>";return 0}
 	set realname $rest ; save
 	putserv "QUIT :$notic [katakata "rEALNaME CHaNGED By"] \[ $nick \]"
 }
@@ -289,11 +302,29 @@ proc msg_sh {nick host hand rest} {
 	}
 }
 
-proc msg_chanset {nick host hand arg} {
+proc msg_greetonoff {nick host hand rest} {
+	global botnick notim greetmode
+	set opsi [lindex [split $rest] 0]
+	if {$opsi == ""} {puthelp "PRIVMSG $nick :$notim Usage: autogreet <on/off>"; return 0}
+	if {$opsi == "on"} {
+		if {$greetmode == "1"} {puthelp "PRIVMSG $nick :$notim auToGrEet is AlReady \[$enable\]"; return 0}
+		catch { bind join - * kirim_sambutan}
+		set greetmode "1"
+		puthelp "PRIVMSG $nick :$notim auToGrEet is \[$enable\]"
+	}
+	if {$opsi == "off"} {
+		if {$greetmode == "0"} {puthelp "PRIVMSG $nick :$notim auToGrEet is AlReady \[$disable\]"; return 0}
+		catch { unbind join - * kirim_sambutan}
+		set greetmode "0"
+		puthelp "PRIVMSG $nick :$notim auToGrEet is \[$disable\]"
+	}
+}
+
+proc msg_chanset {nick host hand rest} {
 	global notic tolak notim
-	set chan [lindex [split $arg] 0]
-	set flag [lindex [split $arg] 1]
-	set str [join [lrange [split $arg] 1 end]]
+	set chan [lindex [split $rest] 0]
+	set flag [lindex [split $rest] 1]
+	set str [join [lrange [split $rest] 1 end]]
 	if {[matchattr $hand Z $chan]} {
 		if {![validchan $chan]} {
 			puthelp "PRIVMSG $nick :$notim [katakata "im not on that channel"]!"
@@ -769,9 +800,44 @@ proc pub_topic {nick uhost hand chan rest} {
 proc pub_topic {nick uhost hand chan rest} {
 	global notic botnick
 	if {![isop $botnick $chan]} { putquick "NOTICE $nick :$notic [katakata "sorry, im not operator"]";return 0 }
-	if {![matchattr $nick Z]} { putquick "NOTICE $nick :$notic $tolak" ; return 0 }
 	if {$rest == ""} { puthelp "NOTICE $nick :$notic Usage: `topic Welcome to $chan" ; return 0 }
 	putserv "TOPIC $chan :$rest"
+}
+
+proc pub_plusgreet {nick uhost hand chan rest} {
+	global botnick notic greetmode
+	if {$greetmode == "1"} {
+		foreach i [channel info $chan] {
+			if {[string match "+sambut" $i]} {putquick "NOTICE $nick :$notic AuToGreET is  AlReady \[$aktif\]"; return 0}
+		}
+		channel set $chan +sambut ; save
+		putquick "NOTICE $nick :$notic AuToGreET\002 $chan \002iS \[$aktif\] "
+	} else {
+		puthelp "NOTICE $nick :$notic AuToGreET Mode is \[$disable\] - To ActiVAted /msg $botnick autogreet on"
+	}
+}
+
+proc pub_mingreet {nick uhost hand chan rest} {
+	global botnick notic greetmode
+	if {$greetmode == "1"} {
+		foreach i [channel info $chan] {
+			if {[string match "-sambut" $i]} {putquick "NOTICE $nick :$notic AuToGreET is AlReady \[\$deaktif\]"; return 0}
+		}
+		channel set $chan -sambut ; save
+		putquick "NOTICE $nick :$notic AuToGreET\002 $chan \002iS \[$deaktif\] "
+	} else {
+		puthelp "NOTICE $nick :$notic AuToGreET Mode is \[$disable\] - To ActiVAted \037/msg $botnick autogreet on\037"
+	}
+}
+
+proc kirim_sambutan {nick uhost hand chan} {
+	global botnick sambutm
+	foreach i [channel info $chan] {
+		if {[string match "+sambut" $i]} {
+			set sambutmsg [lindex $sambutm [rand [llength $sambutm]]]
+			putserv "PRIVMSG $chan :Hai \0030,1 $nick \003, $sambutmsg"
+		}
+	}
 }
 
 proc pub_botcmd {nick uhost hand chan rest} {
@@ -785,10 +851,12 @@ proc pub_botcmd {nick uhost hand chan rest} {
 			deauth { pub_deauth $nick $uhost $hand $chan "" }
 			cycle  { pub_cycle $nick $uhost $hand $chan "" }
 			ver  { pub_info $nick $uhost $hand $chan "" }
-			v { pub_pois $nick $uhost $hand $chan $botcmd }
+			+v { pub_pois $nick $uhost $hand $chan $botcmd }
 			dv { pub_depois $nick $uhost $hand $chan $botcmd }
-			o { pub_opers $nick $uhost $hand $chan $botcmd }
+			+o { pub_opers $nick $uhost $hand $chan $botcmd }
 			do { pub_dopers $nick $uhost $hand $chan $botcmd }
+			+greet { pub_plusgreet $nick $uhost $hand $chan "" }
+			-greet { pub_mingreet $nick $uhost $hand $chan "" }
 			default { puthelp "NOTICE $nick :This \002`$botcmd\002 CaNNot UsiNg BotName" }
 		}
 	}
@@ -902,40 +970,44 @@ proc autoversion {nick uhost hand dest key arg} {
 
 proc kirimhelp {nick uhost hand rest} {
 	global notim tolak version notic verc
-        if {![matchattr $hand Z]} {putlog "!cVd! $nick Try to Command help";return 0}
+    if {![matchattr $hand Z]} {putlog "!cVd! $nick Try to Command help";return 0}
 	puthelp "PRIVMSG $nick :\037\002     [katakata "bot command list via private"]\002                                \037"
-	puthelp "PRIVMSG $nick :\002auth\002 <password>					- [katakata "login owner access"]"
+	puthelp "PRIVMSG $nick :\002auth\002 <password>							- [katakata "login owner access"]"
 	puthelp "PRIVMSG $nick :\002deauth\002							- [katakata "logout from your bot"]"
-	puthelp "PRIVMSG $nick :\002join\002 <#chan>					- [katakata "ask bot to join channel <#chan>"]"
-	puthelp "PRIVMSG $nick :\002part\002 <#chan>					- [katakata "ask bot to part channel <#chan>"]"
-	puthelp "PRIVMSG $nick :\002nick\002 <nick> <password>			- [katakata "ask bot to change botnick"]"
-	puthelp "PRIVMSG $nick :\002identify\002 <password>				- [katakata "ask bot to identify botnick"]"
-	puthelp "PRIVMSG $nick :\002chanset\002 <#chan> <+/-flag>		- [katakata "ask bot to setting flag on channel"]"
-	puthelp "PRIVMSG $nick :\002ignore\002 <add/del/list> <*!*@*>	- [katakata "ask bot to ignore host user"]"
+	puthelp "PRIVMSG $nick :\002join\002 <#chan>							- [katakata "ask bot to join channel <#chan>"]"
+	puthelp "PRIVMSG $nick :\002part\002 <#chan>							- [katakata "ask bot to part channel <#chan>"]"
+	puthelp "PRIVMSG $nick :\002nick\002 <nick> <password>							- [katakata "ask bot to change botnick"]"
+	puthelp "PRIVMSG $nick :\002identify\002 <password>							- [katakata "ask bot to identify botnick"]"
+	puthelp "PRIVMSG $nick :\002chanset\002 <#chan> <+/-flag>							- [katakata "ask bot to setting flag on channel"]"
+	puthelp "PRIVMSG $nick :\002ignore\002 <add/del/list> <*!*@*>							- [katakata "ask bot to ignore host user"]"
+	puthelp "PRIVMSG $nick :\002autogreet\002 <on/off>							- [katakata "ask bot to activated greet system"]"
 	puthelp "PRIVMSG $nick :\002rehash\002							- [katakata "ask bot to rehashing"]"
 	puthelp "PRIVMSG $nick :\002restart\002							- [katakata "ask bot to restart "]"
-	puthelp "PRIVMSG $nick :\002die\002								- [katakata "ask bot to shutdown "]"
+	puthelp "PRIVMSG $nick :\002die\002							- [katakata "ask bot to shutdown "]"
 	puthelp "PRIVMSG $nick :\002 \002"
 	puthelp "PRIVMSG $nick :\002\037     [katakata "bot command list via public"]\002                                \037"
 	puthelp "PRIVMSG $nick :\002`auth\002							- [katakata "see your status"]"
 	puthelp "PRIVMSG $nick :\002`deauth\002							- [katakata "logout from your bot"]"
 	puthelp "PRIVMSG $nick :\002`ver\002							- [katakata "display bot information"]"
-	puthelp "PRIVMSG $nick :\002`join\002 <#chan>					- [katakata "ask join to channel <#chan>"]"
-	puthelp "PRIVMSG $nick :\002`part\002 <#chan>					- [katakata "ask bot to part channel <#chan>"]"
-	puthelp "PRIVMSG $nick :\002`k\002 <nick>						- [katakata "ask bot to kick nick from channel"]"
-	puthelp "PRIVMSG $nick :\002`kb\002 <nick>						- [katakata "ask bot to kickban nick from channel"]"
-	puthelp "PRIVMSG $nick :\002`ub\002 <nick>						- [katakata "ask bot to unban nick"]"
-	puthelp "PRIVMSG $nick :\002`mub\002 <nick>						- [katakata "ask bot to mass unban"]"
-	puthelp "PRIVMSG $nick :\002`v\002 <nick>						- [katakata "ask bot to voice nick"]"
-	puthelp "PRIVMSG $nick :\002`mv\002 <nick>						- [katakata "ask bot to mass voice nick"]"
-	puthelp "PRIVMSG $nick :\002`dv\002 <nick>						- [katakata "ask bot to devoice nick"]"
-	puthelp "PRIVMSG $nick :\002`dmv\002 <nick>						- [katakata "ask bot to mass devoice nick"]"
-	puthelp "PRIVMSG $nick :\002`o\002 <nick>						- [katakata "ask bot to @op nick"]"
-	puthelp "PRIVMSG $nick :\002`do\002 <nick>						- [katakata "ask bot to de@op nick"]"
+	puthelp "PRIVMSG $nick :\002`join\002 <#chan>							- [katakata "ask join to channel <#chan>"]"
+	puthelp "PRIVMSG $nick :\002`part\002 <#chan>							- [katakata "ask bot to part channel <#chan>"]"
+	puthelp "PRIVMSG $nick :\002`k\002 <nick>							- [katakata "ask bot to kick nick from channel"]"
+	puthelp "PRIVMSG $nick :\002`kb\002 <nick>							- [katakata "ask bot to kickban nick from channel"]"
+	puthelp "PRIVMSG $nick :\002`ub\002 <nick>							- [katakata "ask bot to unban nick"]"
+	puthelp "PRIVMSG $nick :\002`mub\002 <nick>							- [katakata "ask bot to mass unban"]"
+	puthelp "PRIVMSG $nick :\002`v\002 <nick>							- [katakata "ask bot to voice nick"]"
+	puthelp "PRIVMSG $nick :\002`mv\002 <nick>							- [katakata "ask bot to mass voice nick"]"
+	puthelp "PRIVMSG $nick :\002`dv\002 <nick>							- [katakata "ask bot to devoice nick"]"
+	puthelp "PRIVMSG $nick :\002`dmv\002 <nick>							- [katakata "ask bot to mass devoice nick"]"
+	puthelp "PRIVMSG $nick :\002`o\002 <nick>							- [katakata "ask bot to @op nick"]"
+	puthelp "PRIVMSG $nick :\002`do\002 <nick>							- [katakata "ask bot to de@op nick"]"
+	puthelp "PRIVMSG $nick :\002`+greet\002							- [katakata "ask bot to start greeting user join"]"
+	puthelp "PRIVMSG $nick :\002`-greet\002							- [katakata "ask bot to stop greeting user join"]"
 	puthelp "PRIVMSG $nick :\002`cycle\002							- [katakata "ask bot to cycle from channel"]"
 	puthelp "PRIVMSG $nick :\002`logo\002							- [katakata "ask bot to send logo"]"
 	puthelp "PRIVMSG $nick :\037                                                                    \037"
-	puthelp "PRIVMSG $nick :     [katakata "bot running with eggdrop"] v[lindex $version 0] [katakata "powered by"] [lgrnd] $verc"
+	puthelp "PRIVMSG $nick :[katakata "This bot running with eggdrop"] v[lindex $version 0]" 
+	puthelp "PRIVMSG $nick :[katakata "powered by with"] [lgrnd] $verc"
 }
 
 putlog "#######################################"
