@@ -6,6 +6,7 @@
 ##                                                                          ##
 ## This is not Protection Scripts                                           ##
 ## Just basic control to your eggdrop..                                     ##
+## Working and Tested on irc.dal.net & irc.evochat.id                       ##
 ##                                                                          ##
 ## RUN YOUR EGGDROP                                                         ##
 ## /MSG BOT HELLO             identify yourself to bot                      ##
