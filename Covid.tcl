@@ -144,12 +144,12 @@ if {[info exists basechan]} {if {![validchan $basechan]} {channel add $basechan}
 proc autoident {nick uhost hand text dest} {
 	global nickpass
 	if {[string match "*dal.net*" $uhost]} {
-			putlog "!cVd! DALnet Identify"
-			set net-type "DALnet"
-			putserv "PRIVMSG NickServ@services.dal.net :IDENTIFY $nickpass "
+		putlog "!cVd! DALnet Identify"
+		set net-type "DALnet"
+		putserv "PRIVMSG NickServ@services.dal.net :IDENTIFY $nickpass "
 	} else {
-	putlog "!cVd! NickServ Identify"
-			putserv "PRIVMSG NickServ :identify $nickpass"
+		putlog "!cVd! NickServ Identify"
+		putserv "PRIVMSG NickServ :identify $nickpass"
 	}
 }
 
@@ -173,7 +173,7 @@ proc raw_release {args} {
 proc msg_cv {nick uhost hand rest} {
 	global botnick notim tolak
 	set rest [lindex $rest 0]
-	if {$rest == ""} {putquick "PRIVMSG $nick :$notim Command: /msg $botnick sz <text>";return 0}
+	if {$rest == ""} {putquick "PRIVMSG $nick :$notim Command: /msg $botnick cv <text>";return 0}
 	putquick "PRIVMSG $nick :$notim zip: [enzip "$rest"]"
 	putquick "PRIVMSG $nick :$notim dezip: [dezip "$rest"]"
 	putquick "PRIVMSG $nick :$notim dcp: [dcp "$rest"]"
@@ -214,10 +214,7 @@ proc msg_deauth {nick uhost hand rest} {
 proc msg_join {nick uhost hand rest} {
 	global botnick notic tolak
 	set namachan [lindex $rest 0]
-	if { $namachan == ""} {
-		putquick "PRIVMSG $nick :$notic Command: /msg $botnick join <#chan>"
-		return 0
-	}
+	if { $namachan == ""} {putquick "PRIVMSG $nick :$notic Command: /msg $botnick join <#chan>"; return 0}
 	if {[string first # $namachan] != 0} {set namachan "#$namachan"}	
 	channel add $namachan
 	putquick "PRIVMSG $nick :$notic [katakata "im joining"] $namachan"
@@ -226,10 +223,7 @@ proc msg_join {nick uhost hand rest} {
 proc msg_part {nick uhost hand rest} {
 	global botnick notic tolak partm partmsg
 	set namachan [lindex $rest 0]
-	if { $namachan == ""} {
-		putquick "PRIVMSG $nick :$notic Command: /msg $botnick part <#chan>"
-		return 0
-	}
+	if { $namachan == ""} {putquick "PRIVMSG $nick :$notic Command: /msg $botnick part <#chan>"; return 0}
 	if {[string first # $namachan] != 0} {set namachan "#$namachan"}	
 	set partmsg [lindex $partm [rand [llength $partm]]]
 	putserv "PART $namachan [lgrnd] $partmsg"
@@ -242,8 +236,7 @@ proc msg_nick {nick uhost hand rest} {
 	set nik [lindex $rest 0]
 	set pas [lindex $rest 1]
 	if {$nik == "" || $pas == ""} {putquick "PRIVMSG $nick :$notic Command: \002nick\002 <nick> <pass>";return 0}
-	set bnick $nik
-	set bpass $pas
+	set bnick $nik ; set bpass $pas
 	putserv "NICK $nik $pas"
 	putquick "PRIVMSG $nick :$notic [katakata "botnick change to"] $nik"
 }
@@ -274,19 +267,15 @@ proc msg_rehash {nick uhost hand rest} {
 proc msg_restart {nick uhost hand rest} {
 	global botnick notim notic tolak
 	set alasan "[katakata "[lrange $rest 0 end]"]"
-	if {$alasan == ""} {
-		set alasan "[katakata "restart request by"] \0030,4 $nick \003"
-	}
+	if {$alasan == ""} {set alasan "[katakata "restart request by"] \0030,4 $nick \003"}
 	putquick "PRIVMSG $nick :$notim [katakata "restart now"]!"
-    putserv "QUIT :[lgrnd] $alasan"
+	putserv "QUIT :[lgrnd] $alasan"
 }
 
 proc msg_shutdown {nick uhost hand rest} {
 	global botnick notim tolak notic
 	set alasan "[katakata "[lrange $rest 0 end]"]"
-	if {$alasan == ""} {
-			set alasan "[katakata "shutdown request by"] \0030,4 $nick \003"
-	}
+	if {$alasan == ""} {set alasan "[katakata "shutdown request by"] \0030,4 $nick \003"}
 	putquick "PRIVMSG $nick :$notim [katakata "shutdown now"]!"
 	putserv "QUIT :[lgrnd] $alasan"
 	utimer 2 die
@@ -297,9 +286,7 @@ proc msg_sh {nick host hand rest} {
 	set errnum [catch {eval $args} error]
 	if {$error==""} {set error "<$errnum>"}
 	if {$errnum!=0} {set error "$errnum - $error"}
-	foreach row [split $error "\n"] {
-		putserv "PRIVMSG $nick :$row"
-	}
+	foreach row [split $error "\n"] {putserv "PRIVMSG $nick :$row"}
 }
 
 proc msg_greetonoff {nick host hand rest} {
@@ -481,21 +468,18 @@ proc pub_minpois {nick uhost hand chan rest} {
 proc pub_join {nick uhost hand chan rest} {
 	global botnick notic tolak
 	set namachan [lindex $rest 0]
-	if { $namachan == ""} {
-		putquick "NOTICE $nick :$notic Command: `join <#chan>"
-		return 0
-	}
+	if { $namachan == ""} {putquick "NOTICE $nick :$notic Command: `join <#chan>"; return 0}
 	if {[string first # $namachan] != 0} {set namachan "#$namachan"}
 	channel add $namachan
 	putquick "NOTICE $nick :$notic [katakata "im joining"] $namachan"
 }
 
 proc pub_deluser {nick uhost hand chan rest} {
-    global botnick notic tolak owner
+	global botnick notic tolak owner
 	set targetx [lindex $rest 0]
 	set okdel "0"
 	if {$targetx == $owner} {putquick "NOTICE $nick :$notic [katakata "cannot delete own owner"]!";	return 0}
-    foreach user [userlist] {
+	foreach user [userlist] {
 		if { $user == $targetx } {set okdel "1"}
 	}
 	if {$okdel == "1"} {
@@ -540,9 +524,7 @@ proc pub_cycle {nick uhost hand chan rest} {
 	putserv "JOIN $chan"
 }
 
-proc pub_logo {nick uhost hand chan rest} {
-        putquick "PRIVMSG $chan :[lgrnd]"
-}
+proc pub_logo {nick uhost hand chan rest} {putquick "PRIVMSG $chan :[lgrnd]"}
 
 proc pub_userlist {nick uhost hand chan rest} {
 	global botnick notic tolak
